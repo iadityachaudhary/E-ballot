@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voting Website</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* main{
+        display: flex;
+        justify-content: space-between;
+        background-color: blue;
+    } */
+    .profile{
+  
+    position: absolute;
+    /* left: 1000px; */
+    top: 300px;
+    width: 1200px;
+    left: 1100px;
+    }
+    .modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+  background-color: white;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%;
+  text-align: center;
+  position: relative; /* Added position */
+}
+
+.close {
+  position: absolute; /* Added position */
+  top: 0; /* Positioned in the top */
+  right: 0; /* Positioned in the right */
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.modal-image {
+  width: 500px;
+  height: 420px;
+}
+table{
+  font-size: smaller;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 800px; /* adjust as needed */
+  margin: 0 auto; /* center the table */
+}
+
+th, td {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #dddddd;
+}
+.profile{
+  margin-left: -80px;
+}
+</style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">EBallot</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/about">About</a>
+        </li>
+      </ul>
+      <div class="form-inline my-2 my-lg-0">
+        <button  class="btn btn-success mr-2" id="show-chart">Live Voting Count</button>
+        <button  class="btn btn-primary" onclick="logout()">Logout</button>
+      </div>
+    </div>
+  </nav>
+<main>
+
+<!-- live vote count pop up -->
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h3 class="scope">{{ election }} Election Analytics</h3>
+    <div id="chart-container"></div>
+    <p>{{ numberofpplvoted }}</p>
+  </div>
+</div>
+
+
+
+
+  <!-- Main Content -->
+  <div class="side">
+  <div class="container mt-3">
+    <div class="row">
+      <!-- News Section -->
+      <div class="col-lg-8">
+        <h2>Latest News</h2>
+        <hr>
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">Upcoming election</h5>
+            <p class="card-text">Hello everyone there is a {{nexte}} election coming up. Kindly apply for candidation.</p>
+          </div>
+        </div>
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">Selected Candidates</h5>
+            <table>
+              <tr>
+                <th>name</th>
+              </tr>
+              {% for i in cands %}
+                <tr>
+                  <td>{{ i }}</td>
+                </tr>
+              {% endfor %}
+            </table>
+            <!-- <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vel facilisis massa. Donec dictum arcu eu ante laoreet aliquam. Sed faucibus enim vel justo aliquam, eu sollicitudin felis bibendum. Integer dictum auctor augue, eu consequat enim bibendum nec.</p> -->
+          </div>
+        </div>
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">Election Results<div class="card mb-3">
+                <div class="card-body">
+                  <h5 class="card-title">Results of Last Elections: {{fullresults[0]}}
+      </h5>
+      <table>
+        <tr>
+          <th>name</th>
+          <th>id</th>
+          <th>votes</th>
+        </tr>
+            <tr><td>{{ fullresults[2]}}</td>
+            <td>{{ fullresults[3]}}</td>
+            <td>{{ fullresults[4]}}</td></tr>
+            <tr><td>{{ fullresults[5]}}</td>
+            <td>{{ fullresults[6]}}</td>
+          <td>{{ fullresults[7]}}</td></tr>
+      </table>
+      <br><br>
+      <h5 class="card-title">Winner is: {{fullresults[2]}}!</h5>
+                  <!-- <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vel facilisis massa. Donec dictum arcu eu ante laoreet aliquam. Sed faucibus enim vel justo aliquam, eu sollicitudin felis bibendum. Integer dictum auctor augue, eu consequat enim bibendum nec.</p> -->
+                </div>
+              </div>
+            </div>
+              <!-- User Profile Section -->
+
+
+    <!-- Voting Button Section -->
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">Select Poll</h5>
+        <hr>
+        <form method="post">
+          <div class="form-group">
+            <label for="scope">Election regarding :</label>
+            <input type="text" name = "scope" value = "{{ election }}">
+          </div>
+          <button type="submit" class="btn btn-primary">Vote</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+<div class="profile">
+<div class="col-lg-4">
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">User Profile</h5>
+        <hr>
+        <p class="card-text">Welcome, {{ name }}!</p>
+        <p class="card-text">your course is  {{ course }} {{ year }}</p>
+        <p class="card-text">your Roll no. is  {{ roll }}</p>
+        <!-- <p class="card-text">Your enrollment no. is : {{ roll }}!</p> -->
+        <a href="{{ url_for('applycand') }}" class="btn btn-primary">Be a Candidate!</a>
+      </div>
+    </div>
+</div>
+</main>
+
+<!-- Footer -->
+<footer class="bg-dark text-white py-3">
+  <div id="data" data-num1="{{ num1 }}" data-num2="{{ num2 }}"></div>
+  <!-- {{num1}}{{num2}} -->
+  <div class="container text-center">
+    <p>&copy; 2023 EBallot</p>
+  </div>
+</footer>
+<!-- Bootstrap JS -->
+
+<script src="{{ url_for('static', filename='chart.js') }}"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

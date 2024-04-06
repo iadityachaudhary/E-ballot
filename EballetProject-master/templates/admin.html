@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Admin Page</title>
+    <style>
+      /* Style for the form */
+      form {
+        border: 1px solid black;
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+      label {
+        display: block;
+        margin-bottom: 10px;
+      }
+      select {
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        border: none;
+        box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
+      }
+      input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      input[type="reset"] {
+        background-color: #2949bc;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;}
+      #log {
+        background-color: #2949bc;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      input[type="submit"]:hover {
+        background-color: #3e8e41;
+      }
+      input[type="reset"]:hover {
+        background-color: #16236a;
+      }
+      #log:hover {
+        background-color: #16236a;
+      }
+      
+      /* Style for the sections */
+      section {
+        border: 1px solid black;
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+      h2 {
+        margin-top: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Welcome to the Admin Page</h1>
+    <section>
+      <form method="post">
+        <h2>Batch Wise Election</h2>
+        <label for="election-type-1">Select the Batch: </label>
+        <select id="election-type-1" name="batch" >
+          <option value="">Select a batch</option>
+          <option value=" ">None</option>
+          <option value="Batch EB01">Batch EB01</option>
+          <option value="Batch EB02">Batch EB02</option>
+          <option value="Batch EB03">Batch EB03</option>
+          <option value="Batch EB04">Batch EB04</option>
+          <option value="Batch EB05">Batch EB05</option>
+          <option value="Batch EB06">Batch EB06</option>
+          <option value="Batch EB07">Batch EB07</option>
+          <option value="Batch EB08">Batch EB08</option>
+          <option value="Batch EB09">Batch EB09</option>
+          <option value="Batch EB10">Batch EB10</option>
+          <option value="Batch EB11">Batch EB11</option>
+          <option value="Batch EB12">Batch EB12</option>
+          <option value="Batch EB13">Batch EB13</option>
+          <option value="Batch EB14">Batch EB14</option>
+          <option value="Batch EB15">Batch EB15</option>
+          <option value="Batch EB16">Batch EB16</option>
+          <option value="Batch EB17">Batch EB17</option>
+          <option value="Batch EB18">Batch EB18</option>
+          <option value="Batch EB19">Batch EB19</option>
+          <option value="Batch EB20">Batch EB20</option>
+          <option value="Batch EB21">Batch EB21</option>
+          <option value="Batch EB22">Batch EB22</option>
+          <option value="Batch EB23">Batch EB23</option>
+          <option value="Batch EB24">Batch EB24</option>
+          <option value="Batch EB25">Batch EB25</option>
+          <option value="Batch EB26">Batch EB26</option>
+          <option value="Batch EB27">Batch EB27</option>
+          <option value="Batch EB28">Batch EB28</option>
+          <option value="Batch EB29">Batch EB29</option>
+          <option value="Batch EB30">Batch EB30</option>
+          <option value="Batch EB31">Batch EB31</option>
+        </select>
+        <br><br>
+      <h2>Group Wise Election</h2>
+      <form method="post">
+        <label for="election-type-2">Select the Group:</label>
+        <select id="election-type-2" name="group" >
+          <option value="">Select a Group</option>
+          <option value=" ">None</option>
+          <option value="Group G1">Group G1</option>
+          <option value="Group G2">Group G2</option>
+          <option value="Group G3">Group G3</option>
+          <option value="Group G4">Group G4</option>
+          <option value="Group G5">Group G5</option>
+        </select>
+        <br><br>
+      <h2>Year Wise Election</h2>
+      <form method="post">
+        <label for="election-type-3">Select the Year:</label>
+        <select id="election-type-3" name="year" >
+          <option value="">Select an year</option>
+          <option value=" ">None</option>
+          <option value="Year 1">Year 1</option>
+          <option value="Year 2">Year 2</option>
+          <option value="Year 3">Year 3</option>
+          <option value="Year 4">Year 4</option>
+          <option value="Year 5">Year 5</option>
+        </select>
+        <br><br>
+      <h2>Course Wise Election</h2>
+      <form method="post">
+        <label for="election-type-4">Select the Course</label>
+        <select id="election-type-4" name="course" >
+            <option value="">Select a Course</option>
+          <option value=" ">None</option>
+            <option value="Course Btech">Course Btech</option>
+            <option value="Course MBA">Course MBA</option>
+            <option value="Course BCA">Course BCA</option>
+          </select>
+          <br><br>
+        <input type="text" name="upel" placeholder="Set Upcoming Election">
+        <br><br>
+        <input type="submit" name="submit_btn" value="Submit">
+        <input type="reset" name="reset_btn" value="Reset">
+        <input type="submit" name="post_results_btn" value="Post Results">
+        <button  class="btn btn-primary" id="log" onclick="logout()">Logout</button>
+        </form>
+      </section>
+      <script>
+        function logout() {
+    window.location.href = "/logout";
+  }
+      </script>
+      </body>
+      </html>
+
